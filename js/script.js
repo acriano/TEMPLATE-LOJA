@@ -40,7 +40,34 @@ const next = () =>{
 
 document.querySelector("#previous").addEventListener("click", previous)
 document.querySelector("#next").addEventListener("click", next)
-	
+
+
+let autoPlayInterval;
+
+const startAutoPlay = () =>{
+    autoPlayInterval = setInterval(() =>{
+        next();
+    }, 4000);
+};
+
+const stopAutoPlay = () =>{
+    clearInterval(autoPlayInterval);
+};
+
+startAutoPlay();
+
+// Seleciona todos os elementos que podem interferir com o hover (incluindo o container-shadow)
+
+const interactiveElements = [containerItems, ...document.querySelectorAll('.container-shadow, .item, .item img')];
+
+
+interactiveElements.forEach(element => {
+    element.addEventListener("mouseenter", stopAutoPlay);
+    element.addEventListener("mouseleave", startAutoPlay);
+});
+
+containerItems.addEventListener("mouseover", stopAutoPlay);
+containerItems.addEventListener("mouseout", startAutoPlay);
 
 
 
